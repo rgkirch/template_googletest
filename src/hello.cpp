@@ -31,11 +31,13 @@ template <typename A, typename B> struct Either {
 template <typename A, typename B> auto left(A a) -> Either<A, B> {
   Either<A, B> e;
   e.a = a;
+  return e;
 }
 
 template <typename A, typename B> auto right(B b) -> Either<A, B> {
   Either<A, B> e;
   e.b = b;
+  return e;
 }
 
 template <typename A> struct IO {
@@ -43,9 +45,8 @@ template <typename A> struct IO {
   Either<string, A> unsafePerformIO() {
     try {
       return right<string, A>(a());
-    } catch (exception e) {
-      string w = e.what();
-      return left<string, string>(w);
+    } catch (...) {
+      return left<string, string>("something bad");
     }
   }
   template <typename B> IO<B> map(function<B(A)> b) const {
@@ -67,7 +68,7 @@ IO<string> readFile(string fp, IOMode mode) {
     string s;
     FILE *f = fopen(fp.c_str(), mode.modeChar);
     if (f == nullptr) {
-      throw IOException();
+      throw "f is nullptr";
     } else {
       int c;
       while ((c = fgetc(f)) != EOF) {

@@ -6,8 +6,12 @@
 using namespace std;
 
 TEST(hello, h) {
-  IO<string> io = readFile("testFile.txt", ReadMode());
-  Either<string, string> e = io.unsafePerformIO();
+  try {
+    IO<string> io = readFile("testFile.txt", ReadMode());
+    Either<string, string> e = io.unsafePerformIO();
+    ASSERT_EQ(e.b, "this is test text");
+  } catch (...) {
+    cout << "catching all errors?" << endl;
+  }
   //   string s = "";
-  ASSERT_EQ(e.b, "this is test text");
 }
