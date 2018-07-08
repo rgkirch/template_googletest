@@ -1,0 +1,9 @@
+{
+    "cquery.cacheDirectory": "${workspaceFolder}/.vscode/cquery_cached_index/",
+    "files.associations": {
+        "*.lang": "haskell",
+        "exception": "cpp",
+        "functional": "cpp",
+        "memory": "cpp"
+    }
+}
